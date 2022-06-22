@@ -1,72 +1,63 @@
-// creating the three possible outputs for the game 
-const options = ['ROCK', 'PAPER', 'SCISSORS'];
-let playerOPtion;
-let computerScore = 0;
-let playerScore = 0;
-let roundsCounter = 0;
+function visible()
+{
+    document.documentElement.style.setProperty('--visibility', 'visible');
+}
+setTimeout(visible, 4000);
+const opts = document.querySelectorAll('.flex img');
+const options = Array.from(opts);
 
 // randomly returning one of the possible options to be the computer option
 let gamePlay =  opt => 
 {
-    return options[Math.floor(Math.random() * 3)]; 
+    return opt[Math.floor(Math.random() * 3)]; 
 }
-const computerOPtion = gamePlay(options);
+
 
 // comparing players option to computers option to declare the winner
-let playerWin = () => 
-{
-    if (playerOPtion == 'ROCK' && computerOPtion == 'SCISSORS')
+options.forEach(option =>
     {
-        return true;
-    }
-    else if (playerOption == 'SCISSORS' && computerOPtion == 'PAPER')
-    {
-        return true;
-    }
-    else if (playerOPtion == 'PAPER' && computerOPtion == 'ROCK')
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
-// incresing scores
-let battle = (playerOpt, compOpt) => 
-{
-    if (playerWin())
-    {
-        playerScore++;
-    }
-    else
-    {
-        computerScore++;
-    }
-}
-// setting all counters to default value
-let restartGame = () =>
-{
-    roundsCounter = 0;
-    playerScore = 0;
-    computerScore = 0;
-}
+        option.addEventListener('click', showWinner);
+    });
 
-// creating five rounds if play
-let newGame = () => 
-{
-    battle(playerOPtion, computerOPtion);
-    roundsCounter++;
-    if (roundsCounter == 5 && playerScore > computerScore)
+    function showWinner(e)
     {
-        return 'YOU WIN'
+        let computerOPtion = gamePlay(options);
+        const compImage = document. querySelector('.comp');
+        let src = computerOPtion.getAttribute('src');
+        compImage.setAttribute('src', src);
+        let result = document.querySelector('.result');
+        
+       
+        if ( computerOPtion == options[0] && this == options[1])
+        {
+            result.textContent = `computer wins scissors beats paper`;
+        }
+        else if (computerOPtion == options[1] && this == options[2])
+        {
+            result.textContent = `computer wins paper beats rock`;
+        }
+        else if (computerOPtion == options[2] && this == options[0])
+        {
+            result.textContent = `computer wins rock beats scissors`;
+        }
+        else if ( this == options[0] && computerOPtion == options[1])
+        {
+            result.textContent = `you win scissors beats paper`;
+        }
+        else if (this == options[1] && computerOPtion == options[2])
+        {
+            result.textContent = `you win paper beats rock`;
+        }
+        else if (this == options[2] && computerOPtion == options[0])
+        {
+            result.textContent = `you win rock beats scissors`;
+        }
+        else{
+            result.textContent = 'tie';
+        }
+       
+      
+        
+       
     }
-    else if (roundsCounter == 5 && playerScore < computerScore)
-    {
-        return 'YOU LOSE'
-    }
-    restartGame();
-
-}
-
-
+   
